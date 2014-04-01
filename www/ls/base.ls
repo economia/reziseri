@@ -47,15 +47,23 @@ for person in persons
 
 people
     ..on \mouseover ->
-        @setAttribute \class \active
+        @setAttribute \data-hover \true
         name = @getAttribute \data-name
-        if names[name]
-            person = that
-            for {person, path} in person.neighbors
-                person.element.setAttribute \class \active
-                path.setAttribute \class \active
+        for {person, path} in names[name].neighbors
+            person.element.setAttribute \data-hover \true
+            path.setAttribute \data-hover \true
 
     ..on \mouseout ->
-        people.attr \class ""
-        connections.attr \class ""
+        people.attr \data-hover ""
+        connections.attr \data-hover ""
 
+    ..on \click ->
+        wasActive = "true" == @getAttribute \data-click
+        people.attr \data-click ""
+        connections.attr \data-click ""
+        return if wasActive
+        @setAttribute \data-click \true
+        name = @getAttribute \data-name
+        for {person, path} in names[name].neighbors
+            person.element.setAttribute \data-click \true
+            path.setAttribute \data-click \true
