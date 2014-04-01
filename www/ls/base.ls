@@ -1,3 +1,4 @@
+new Tooltip!watchElements!
 ig.containers.base.innerHTML = ig.data.reziseri
 container = d3.select ig.containers.base
 svg = container.select \svg
@@ -41,6 +42,8 @@ connections = zoomContent.selectAll \path
         neighbors.0.person.neighbors.push neighbors.1
         neighbors.1.person.neighbors.push neighbors.0
 
+for person in persons
+    person.element.setAttribute \data-tooltip escape "<b>#{person.name}</b><br />Spolupracoval s #{person.neighbors.length} lidmi"
 
 people
     ..on \mouseover ->
